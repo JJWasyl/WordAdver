@@ -1,0 +1,4 @@
+
+*.p
+*.pickle
+lstm/data/sst2_model.pickle

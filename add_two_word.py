@@ -174,9 +174,11 @@ def make_idx_data_cv(revs, word_idx_map, cv, max_l=51, k=300, filter_h=5):
             train.append(sent)   
     train = np.array(train,dtype="int")
     test = np.array(test,dtype="int")
-    return [train, test]     
-  
-   
+    return [train, test]
+
+
+MODELTYPE = 'two_word/'
+
 if __name__=="__main__":
     print "loading data..."
     THEME = "sst2"
@@ -508,7 +510,7 @@ if __name__=="__main__":
             test_loss = test_model_all(test_set_x,test_set_y)        
             test_perf = 1- test_loss
             print '...save'
-            with open('save/'+THEME+'two_model.pickle', 'wb') as file:
+            with open('save/'+MODELTYPE+THEME+'two_model.pickle', 'wb') as file:
                 model = params
                 cPickle.dump(model, file)
     print "perf: " + str(test_perf)

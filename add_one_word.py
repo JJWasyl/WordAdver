@@ -414,8 +414,9 @@ if __name__=="__main__":
         val_losses = [val_model(i) for i in xrange(n_val_batches)]
         val_perf = 1- np.mean(val_losses) 
 
-        print "...replacing"
+        print "... replacing"
         for i in xrange (n_train_batches):
+            print "... batch: {0}/{1}\r".format(i, n_train_batches),
             index =i
             all_din1_index=Fall_din1_index(i)
             all_din2_index=Fall_din2_index(i)
@@ -460,7 +461,7 @@ if __name__=="__main__":
                     Train_set_add = np.row_stack([Train_set_add,train_set_add])
                     if w1 != 0:
                         break                               
-        print('epoch: %i, training time: %.2f secs, train perf: %.2f %%, val perf: %.2f %%' % (epoch, time.time()-start_time, train_perf * 100., val_perf*100.))
+        print('\n epoch: %i, training time: %.2f secs, train perf: %.2f %%, val perf: %.2f %%' % (epoch, time.time()-start_time, train_perf * 100., val_perf*100.))
         print 'count number of not changing' + str(epoch) + ' ' +str(count)
         if val_perf >= best_val_perf:
             best_val_perf = val_perf

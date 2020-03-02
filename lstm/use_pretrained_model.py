@@ -8,6 +8,7 @@ https://github.com/zhegan27/sentence_classification
 import time
 import cPickle
 import numpy as np
+import sys
 import theano
 import theano.tensor as tensor
 
@@ -21,13 +22,16 @@ from nltk.tokenize import word_tokenize
 
 
 def load_adv():
-    filename="sst2_0.4_two_examples.txt"
+    model_type = get_adv_from_arg()
+    filename=model_type+"sst2_0.4_two_examples.txt"
     lines = []
     x = []
     with open(filename, 'r') as f:
         lines.extend(f.readlines())
     for i, line in enumerate(lines):
         x.append(line.rstrip())
+
+    adv_len = len(x)
         
     adver_y=np.array([100])
     adver_x =[]
@@ -57,12 +61,23 @@ def load_adv():
              for j in xrange(len(adver_x)):
                  Adver_x.append(adver_x[j]) 
          Adver_y=np.tile(adver_y,(n_tile,))   
-    Adver_x=Adver_x[:len(test[0])] 
-    Adver_y=Adver_y[:len(test[0])]  
+    #Adver_x=Adver_x[:len(test[0])]
+    #Adver_y=Adver_y[:len(test[0])]
     Adver=(Adver_x,Adver_y)
-    return Adver
+    return (Adver, adv_len)
 
+def get_adv_from_arg():
+    if len(sys.argv) == 4:
+        return './save/'+sys.argv[1]+'/'
+    return './save/one_word/'
 
+def get_orig_from_arg():
+    if len(sys.argv) == 4:
+        if sys.argv[2] == 'original':
+            return True
+        elif sys.argv[2] == 'adverserial':
+            return False
+    return False
 
 """ used to calculate the prediction error. """
 
@@ -141,10 +156,13 @@ def create_valid(train_set,valid_portion=0.10):
 if __name__ == '__main__':
     
     print ('loading data...')
-    x = cPickle.load(open("./data/sst2.p","rb"))
+    x = cPickle.load(open("./lstm/data/sst2.p","rb"))
     train, test, W, ixtoword, wordtoix= x[0], x[1], x[2], x[3], x[4]
     del x
-#     test = load_adv() # test on adversarial test set
+    if not get_orig_from_arg():
+        testset, ad_len = load_adv() # test on adversarial test set
+    else:
+        testset = test
     n_words = W.shape[0] # test on original test set
     
     results = []
@@ -189,7 +207,10 @@ if __name__ == '__main__':
     
     print ('{} train examples'.format(len(train[0])))
     print ('{} valid examples'.format(len(valid[0])))
-    print ('{} test examples'.format(len(test[0])))
+    if not get_orig_from_arg():
+        print ('{} test examples'.format(ad_len/2))
+    else:
+        print ('{} test examples'.format(len(testset[0])))
 
     print ('Building model...')
     
@@ -199,7 +220,7 @@ if __name__ == '__main__':
     params = init_params(options,W)
     
     print ('Loading model...')
-    with open('data/sst2_model.pickle', 'rb') as f:
+    with open('./lstm/data/sst2_model_new.pickle', 'rb') as f:
         tmp = cPickle.load(f)
     
     for keys in params:
@@ -218,14 +239,14 @@ if __name__ == '__main__':
 
     
     kf_valid = get_minibatches_idx(len(valid[0]), valid_batch_size)
-    kf_test = get_minibatches_idx(len(test[0]), valid_batch_size)
+    kf_test = get_minibatches_idx(len(testset[0]), valid_batch_size)
     
     use_noise.set_value(0.)
     
     kf_train_sorted = get_minibatches_idx(len(train[0]), batch_size)
     train_err = pred_error(f_pred, prepare_data, train, kf_train_sorted)
     valid_err = pred_error(f_pred, prepare_data, valid, kf_valid)
-    test_err = pred_error(f_pred, prepare_data, test, kf_test)
+    test_err = pred_error(f_pred, prepare_data, testset, kf_test)
     
     print ('Train {} Valid {} Test {}'.format(train_err, valid_err, test_err))
     

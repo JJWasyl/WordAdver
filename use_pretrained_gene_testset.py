@@ -92,25 +92,25 @@ def load_turker(): # load examples after Mechanical Turkers annotating.
                 continue
             #            print word_idx_map[j]
             adver_x[i/2,p+4]=(word_idx_map[j])
-adver_y=adver_y[1:]
+    adver_y=adver_y[1:]
     adver_y=adver_y.reshape([len(x)/2,])
     return adver_x,adver_y
 
 def loaddata():
-    I=np.loadtxt('save/'+SAVETHEME+'I.txt').astype('int32')
-    M=np.loadtxt('save/'+SAVETHEME+'M.txt').astype('int32')
-    Din1_index=np.loadtxt('save/'+SAVETHEME+'Fir_din1_index.txt').astype('int32')
-    Din2_index=np.loadtxt('save/'+SAVETHEME+'Fir_din2_index.txt').astype('int32')
-    Train_set_x=np.loadtxt('save/'+SAVETHEME+'Train_set_x.txt').astype('int32')
-    Train_set_y=np.loadtxt('save/'+SAVETHEME+'Train_set_y.txt').astype('int32')
+    I=np.loadtxt('save/'+MODELTYPE+SAVETHEME+'I.txt').astype('int32')
+    M=np.loadtxt('save/'+MODELTYPE+SAVETHEME+'M.txt').astype('int32')
+    Din1_index=np.loadtxt('save/'+MODELTYPE+SAVETHEME+'Fir_din1_index.txt').astype('int32')
+    Din2_index=np.loadtxt('save/'+MODELTYPE+SAVETHEME+'Fir_din2_index.txt').astype('int32')
+    Train_set_x=np.loadtxt('save/'+MODELTYPE+SAVETHEME+'Train_set_x.txt').astype('int32')
+    Train_set_y=np.loadtxt('save/'+MODELTYPE+SAVETHEME+'Train_set_y.txt').astype('int32')
     
     train_set_x_ori=np.copy(np.reshape(Train_set_x,(len(Train_set_x)/img_h,img_h)))
     train_set_x=np.copy(np.reshape(Train_set_x,(len(Train_set_x)/img_h,img_h)))
     
-    Sec_I=np.loadtxt('save/'+SAVETHEME+'secI.txt').astype('int32')
-    Sec_M=np.loadtxt('save/'+SAVETHEME+'secM.txt').astype('int32')
-    Sec_din1_index=np.loadtxt('save/'+SAVETHEME+'Sec_din1_index.txt').astype('int32')
-    Sec_din2_index=np.loadtxt('save/'+SAVETHEME+'Sec_din2_index.txt').astype('int32')
+    Sec_I=np.loadtxt('save/'+MODELTYPE+SAVETHEME+'secI.txt').astype('int32')
+    Sec_M=np.loadtxt('save/'+MODELTYPE+SAVETHEME+'secM.txt').astype('int32')
+    Sec_din1_index=np.loadtxt('save/'+MODELTYPE+SAVETHEME+'Sec_din1_index.txt').astype('int32')
+    Sec_din2_index=np.loadtxt('save/'+MODELTYPE+SAVETHEME+'Sec_din2_index.txt').astype('int32')
     
     ### replacement
     
@@ -132,21 +132,21 @@ def loaddata():
     return train_set_x_ori,train_set_x,Train_set_y
 
 def save(i,m):  
-    file_save_int(i,'save/'+SAVETHEME+"I.txt")  
-    file_save_int(m,'save/'+SAVETHEME+"M.txt") 
-    file_save_nparray(fir_din1_index,'save/'+SAVETHEME+"Fir_din1_index.txt") 
-    file_save_nparray(fir_din2_index,'save/'+SAVETHEME+"Fir_din2_index.txt") 
+    file_save_int(i,'save/'+MODELTYPE+SAVETHEME+"I.txt")
+    file_save_int(m,'save/'+MODELTYPE+SAVETHEME+"M.txt")
+    file_save_nparray(fir_din1_index,'save/'+MODELTYPE+SAVETHEME+"Fir_din1_index.txt")
+    file_save_nparray(fir_din2_index,'save/'+MODELTYPE+SAVETHEME+"Fir_din2_index.txt")
     train_set_xsingle=Foutput_train_set_xsingle(i,m) 
     train_set_ysingle=Foutput_train_set_ysingle(i,m)
-    file_save_nparray2d(train_set_xsingle,'save/'+SAVETHEME+"Train_set_x.txt") 
-    file_save_nparray(train_set_ysingle,'save/'+SAVETHEME+"Train_set_y.txt") 
+    file_save_nparray2d(train_set_xsingle,'save/'+MODELTYPE+SAVETHEME+"Train_set_x.txt")
+    file_save_nparray(train_set_ysingle,'save/'+MODELTYPE+SAVETHEME+"Train_set_y.txt")
     return 
 
 def save2(i,m):  
-    file_save_int(i,'save/'+SAVETHEME+"secI.txt")  
-    file_save_int(m,'save/'+SAVETHEME+"secM.txt") 
-    file_save_nparray(sec_din1_index,'save/'+SAVETHEME+"Sec_din1_index.txt") 
-    file_save_nparray(sec_din2_index,'save/'+SAVETHEME+"Sec_din2_index.txt") 
+    file_save_int(i,'save/'+MODELTYPE+SAVETHEME+"secI.txt")
+    file_save_int(m,'save/'+MODELTYPE+SAVETHEME+"secM.txt")
+    file_save_nparray(sec_din1_index,'save/'+MODELTYPE+SAVETHEME+"Sec_din1_index.txt")
+    file_save_nparray(sec_din2_index,'save/'+MODELTYPE+SAVETHEME+"Sec_din2_index.txt")
 #    train_set_xsingle=Foutput_train_set_xsingle(i,m) 
 #    train_set_ysingle=Foutput_train_set_ysingle(i,m)
 #    file_save_nparray2d(train_set_xsingle,'save/'+SAVETHEME+"Train_set_x.txt") 
@@ -154,17 +154,17 @@ def save2(i,m):
     return 
 
 def cover():
-    file_cover('save/'+SAVETHEME+"_examples.txt")
-    file_cover('save/'+SAVETHEME+"I.txt")
-    file_cover('save/'+SAVETHEME+"M.txt") 
-    file_cover('save/'+SAVETHEME+"Fir_din1_index.txt") 
-    file_cover('save/'+SAVETHEME+"Fir_din2_index.txt") 
-    file_cover('save/'+SAVETHEME+"Train_set_x.txt") 
-    file_cover('save/'+SAVETHEME+"Train_set_y.txt") 
-    file_cover('save/'+SAVETHEME+"secI.txt")
-    file_cover('save/'+SAVETHEME+"secM.txt") 
-    file_cover('save/'+SAVETHEME+"Sec_din1_index.txt") 
-    file_cover('save/'+SAVETHEME+"Sec_din2_index.txt") 
+    file_cover('save/'+MODELTYPE+SAVETHEME+"_examples.txt")
+    file_cover('save/'+MODELTYPE+SAVETHEME+"I.txt")
+    file_cover('save/'+MODELTYPE+SAVETHEME+"M.txt")
+    file_cover('save/'+MODELTYPE+SAVETHEME+"Fir_din1_index.txt")
+    file_cover('save/'+MODELTYPE+SAVETHEME+"Fir_din2_index.txt")
+    file_cover('save/'+MODELTYPE+SAVETHEME+"Train_set_x.txt")
+    file_cover('save/'+MODELTYPE+SAVETHEME+"Train_set_y.txt")
+    file_cover('save/'+MODELTYPE+SAVETHEME+"secI.txt")
+    file_cover('save/'+MODELTYPE+SAVETHEME+"secM.txt")
+    file_cover('save/'+MODELTYPE+SAVETHEME+"Sec_din1_index.txt")
+    file_cover('save/'+MODELTYPE+SAVETHEME+"Sec_din2_index.txt")
 
 def shared_dataset(data_xy, borrow=True):
         """ Function that loads the dataset into shared variables
@@ -284,8 +284,14 @@ def vec2sent_onedim(sent_n):
         sent_w_temp=word_idx_map_invert[ind]
         sent_w= sent_w+' '+sent_w_temp  
     return sent_w 
-      
+
+def get_from_arg():
+    if len(sys.argv) == 5:
+        return sys.argv[3]+'/'
+    return 'one_word/'
+
 if __name__=="__main__":
+    MODELTYPE = get_from_arg()
     print "loading data..."
     n_option = 500
     sim_threshold=0.4
@@ -296,7 +302,7 @@ if __name__=="__main__":
     CHANGE_FLAG=1
     
     x = cPickle.load(open(THEME+".p","rb"))
-    revs, W, W2, word_idx_map, vocab, max_l = x[0], x[1], x[2], x[3], x[4],x[5]
+    revs, W, W2, word_idx_map, vocab, max_l = x[0], x[1], x[2], x[3], x[4], x[5]
     print "data loaded!"
     mode= sys.argv[1]
     word_vectors = sys.argv[2]    
@@ -385,7 +391,7 @@ if __name__=="__main__":
     grad_updates = sgd_updates_adadelta(params, dropout_cost, lr_decay, 1e-6, sqr_norm_lim)
     
     #load model parameters
-    with open('save/'+MODELTHEME+'_model.pickle', 'rb') as f:
+    with open('save/'+MODELTYPE+MODELTHEME+'_model.pickle', 'rb') as f:
         tmp = cPickle.load(f)
     
     for i in range(len(classifier.params)):
@@ -540,13 +546,13 @@ if __name__=="__main__":
                     test_set_original= np.copy(test_set[index*batch_size:(index+1)*batch_size][m:m+1,])
                     print "i_vocab"+str(i_vocab)
                     print vec2sent(test_set_original)
-                    file_save_string(vec2sent(test_set_original),'save/'+SAVETHEME+'_examples_raw.txt')
-                    file_save_string('\n','save/'+SAVETHEME+'_examples_raw.txt')
+                    file_save_string(vec2sent(test_set_original),'save/'+MODELTYPE+SAVETHEME+'_examples_raw.txt')
+                    file_save_string('\n','save/'+MODELTYPE+SAVETHEME+'_examples_raw.txt')
                     test_set[index*batch_size:(index+1)*batch_size][m:m+1,fir_din1_index[m]]=fir_din2_index[m]
                     test_set_changed = np.copy(test_set[index*batch_size:(index+1)*batch_size][m:m+1,])
                     print vec2sent(test_set_changed)
-                    file_save_string(vec2sent(test_set_changed),'save/'+SAVETHEME+'_examples_raw.txt')
-                    file_save_string('\n','save/'+SAVETHEME+'_examples_raw.txt')
+                    file_save_string(vec2sent(test_set_changed),'save/'+MODELTYPE+SAVETHEME+'_examples_raw.txt')
+                    file_save_string('\n','save/'+MODELTYPE+SAVETHEME+'_examples_raw.txt')
                     if np.array(sent_n1.nonzero()).size > 10:
                         sec_din1_index=all_din1_index[:,:,-2]
                         sec_din2_indextemp=np.empty((0,U.shape[0]), int)
@@ -611,8 +617,8 @@ if __name__=="__main__":
                             test_set[index*batch_size:(index+1)*batch_size][m:m+1,sec_din1_index[m]]=sec_din2_index[m]
                             test_set_changed = np.copy(test_set[index*batch_size:(index+1)*batch_size][m:m+1,])
                             print vec2sent(test_set_changed)
-                            file_save_string(vec2sent(test_set_changed),'save/'+SAVETHEME+'_examples_raw.txt')
-                            file_save_string('\n','save/'+SAVETHEME+'_examples_raw.txt')
+                            file_save_string(vec2sent(test_set_changed),'save/'+MODELTYPE+SAVETHEME+'_examples_raw.txt')
+                            file_save_string('\n','save/'+MODELTYPE+SAVETHEME+'_examples_raw.txt')
                             if sec_w1 != 0:
                                 save2(i,m)
                                 break      
@@ -677,10 +683,10 @@ if __name__=="__main__":
          
     for i in xrange(len(set_x)):
         if adver_y[i] != adver_y_predict[i]: # and adver_y[i] != adver_y_predict_ori[i]: adver_y[i] == adver_y_predict_adv[i] and adver_y[i] != adver_y_predict_ori[i]:
-            file_save_string(str(adver_y[i])+' '+str(ori_x_y_predict_conf[i])+' '+vec2sent_onedim(ori_x[i]),'save/'+SAVETHEME+'example_conf.txt')
-            file_save_string('\n','save/'+SAVETHEME+'example_conf.txt')
-            file_save_string(str(adver_y_predict[i])+' '+str(adver_y_predict_conf[i])+' '+vec2sent_onedim(adver_x[i]),'save/'+SAVETHEME+'example_conf.txt')
-            file_save_string('\n','save/'+SAVETHEME+'example_conf.txt')
+            file_save_string(str(adver_y[i])+' '+str(ori_x_y_predict_conf[i])+' '+vec2sent_onedim(ori_x[i]),'save/'+MODELTYPE+SAVETHEME+'example_conf.txt')
+            file_save_string('\n','save/'+MODELTYPE+SAVETHEME+'example_conf.txt')
+            file_save_string(str(adver_y_predict[i])+' '+str(adver_y_predict_conf[i])+' '+vec2sent_onedim(adver_x[i]),'save/'+MODELTYPE+SAVETHEME+'example_conf.txt')
+            file_save_string('\n','save/'+MODELTYPE+SAVETHEME+'example_conf.txt')
             print str(adver_y[i])+' '+str(ori_x_y_predict_conf[i])+' '+vec2sent_onedim(ori_x[i])
             print str(adver_y_predict[i])+' '+str(adver_y_predict_conf[i])+' '+vec2sent_onedim(adver_x[i])
     
