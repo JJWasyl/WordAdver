@@ -86,7 +86,7 @@ the classifier and must be cleaned out before use.*
 #### Use `adver_api` (reccomended)
  A simplistic menu for generating (and cleaning) adversarial examples and loading them 
  for testing on the LSTM model.  <br/><br/>
- ![Example api](https://github.com/JJWasyl/WordAdver/tree/master/images/Example.png)
+ ![Example api](https://drive.google.com/file/d/1ZT0KJpNGqLUKcoeVcaE3Yqi_yB0qPQXd/view?usp=sharing)
  <br/> 
 
 ### Original Project Citation
