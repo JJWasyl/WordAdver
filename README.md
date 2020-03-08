@@ -36,6 +36,8 @@ This repository holds the **Word-level Adversarial Examples** codes and models a
  from the python interpreter using `nltk.download('package_name')`)
 * Pandas
 * numpy
+* scipy
+* cPickle
 
 
 *Note: Docker image is still pending on AWS<br/>Warnings are common due to increasing
