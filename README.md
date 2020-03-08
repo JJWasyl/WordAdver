@@ -28,7 +28,16 @@ This repository holds the **Word-level Adversarial Examples** codes and models a
     A percentage accuracy score on the original dataset spliced with the adversarial examples.
 
 ## Environment Requirements
-#### Overall
+This project uses two repositories and different enovironments. During my work, it was
+hosted on an AWS AMI. The snapshot is available for copy. There are two ways to set up
+your environment.
+1. Running from Linux AMI
+	* Pulic AMI-ID: `ami-018b10d93f5a1041e`.
+	* Run any python 3.7 for preprocessing.
+	* `source activate theano_p27` for training.<br/>
+1. Setting your own environemnt
+	
+#### Overall dependencies
 * NLTK (`stopwords`, `punkt`, `brown`, `wordnet` and `universal_tagset` may require to be downloaded
  from the python interpreter using `nltk.download('package_name')`)
 * numpy
@@ -45,7 +54,7 @@ This repository holds the **Word-level Adversarial Examples** codes and models a
 * CUDA (9.0)
 * Cudnn (8.0)
 
-*Note: Docker image is still pending on AWS<br/>Warnings are common due to increasing
+*Note: Docker image size is currently 90GB and is still pending on AWS<br/>Warnings are common due to increasing
 deprecations and incompatibilities.*
 
 ## Deliverables
