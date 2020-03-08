@@ -30,9 +30,16 @@ This repository holds the **Word-level Adversarial Examples** codes and models a
 ## Environment Requirements
 * Python (2.7) 
 * Theano (0.9)
-* NLTK.
-* Pandas (preprocessing)
-* GPU Training environment (Highly reccomended)
+* CUDA (9.0)
+* Cudnn (8.0)
+* NLTK (`stopwords`, `punkt`, `brown`, `wordnet` and `universal_tagset` may require to be downloaded
+ from the python interpreter using `nltk.download('package_name')`)
+* Pandas
+* numpy
+
+
+*Note: Docker image is still pending on AWS<br/>Warnings are common due to increasing
+deprecations and incompatibilities.*
 
 ## Deliverables
 These include trained models and preprocessing resources:
@@ -63,6 +70,10 @@ datasets for both models before running any script.<br/>
 Change `device=cpu` if you wish to train on the CPU. Use `-nonstatic / -static` for embedding
 updates and `-word2vec / -random` for starting word embedding vectors.
 1. Similarly, train the LSTM classifier `WordAdver\lstm\sst2_lstm`. You can skip the flags.
+
+*Note: Hyperparameters are edited inside the above script files. Most notable is the
+`sim_threshold` for the similarity index and `n_option` for the amount of word options
+to examine during training.*
 
 Command examples
 ```
