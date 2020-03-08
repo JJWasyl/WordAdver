@@ -28,16 +28,21 @@ This repository holds the **Word-level Adversarial Examples** codes and models a
     A percentage accuracy score on the original dataset spliced with the adversarial examples.
 
 ## Environment Requirements
-* Python (2.7) 
-* Theano (0.9)
-* CUDA (9.0)
-* Cudnn (8.0)
-* NLTK (`stopwords`, `punkt`, `brown`, `wordnet` and `universal_tagset` may require to be downloaded
- from the python interpreter using `nltk.download('package_name')`)
-* Pandas
-* numpy
-* scipy
-* cPickle
+Code was run on AWS Linux AMI for Deep Learning
+1. Running from Linux AMI
+	* Pulic AMI-ID: `ami-018b10d93f5a1041e`
+	* source activate theano_p27<br/>
+1. Running on other Linux distribution
+	* Python (2.7) Anaconda reccomended
+	* Theano (0.9)
+	* CUDA (9.0)
+	* Cudnn (8.0)
+	* NLTK (`stopwords`, `punkt`, `brown`, `wordnet` and `universal_tagset` may require to be downloaded
+ 	from the python interpreter using `nltk.download('package_name')`)
+	* Pandas
+	* numpy
+	* scipy
+	* cPickle
 
 
 *Note: Docker image is still pending on AWS<br/>Warnings are common due to increasing
