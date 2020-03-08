@@ -1,68 +1,96 @@
 ## Word-level Adversarial Examples in Convolutional Neural Networks for Sentence Classification
 
-This repository holds the **Word-level Adversarial Examples** codes and models for the papers 
+This repository holds the **Word-level Adversarial Examples** codes and models adapted from the papers 
 **HotFlip: White-Box Adversarial Examples for Text Classification**
 
 [[Arxiv Preprint](https://arxiv.org/abs/1712.06751)]
 [[ACL 2018](https://www.aclweb.org/anthology/P18-2006)]
 
-This repository includes robustness improvements using adversarial training improvement. 
+## Project Outline
+1. #### Purpose
+    In the realm of text based training, the use of adversarial examples can greatly benefit the
+    improvement of sentiment classifiers. Generating "noise" on a character level is a viable method
+    for proofing against common typos and misspellings, however there aren't a lot of viable solutions
+    working on word-level problems. **The purpose of this project is to consistently generate semantically
+    sound adversarial examples to existing text with the purpose of enriching a given dataset.**
+1. #### Pipeline
+    This particular project is designed to train on a sentiment classification dataset. This dataset
+    is preprocessed using an [associated repository](https://github.com/AnyiRao/SentDataPre). A CNN model
+    for adversarial generation is trained on the preprocessed data and another LSTM model is trained for
+    ordinary sentiment classification. The model and dataset are then used in a generation script to output
+    filtered adversarial examples meeting set prerequisites. These examples are then used for **attacking**
+    the LSTM Classifier.
+1. #### Inputs
+    A list of sentence pairs:<br/>
+    * just when the movie seems **confident** enough to handle subtlety , it dives into soapy bathos
+    * just when the movie seems **pleased** enough to handle subtlety , it dives into soapy bathos
+1. #### Outputs
+    A percentage accuracy score on the original dataset spliced with the adversarial examples.
 
-Some examples generated from CNN are able to trick both CNN and BLSTM. please have a look at  ``examples.txt``, with the first column as its label, the second as its confidence, the third as the sentence. ``examples_turker.txt`` are examples given to [Amazon Mechanical Turk](https://www.mturk.com/mturk/welcome) and they annoted the adversarial and original examples share the same meanings.
-### Requirements
-Code is written in Python (2.7) and requires Theano (0.9), NLTK.
+## Environment Requirements
+* Python (2.7) 
+* Theano (0.9)
+* NLTK.
+* Pandas (preprocessing)
+* GPU Training environment (Highly reccomended)
 
-Using the pre-trained `word2vec` vectors will also require downloading the binary file from
-https://code.google.com/p/word2vec/
+## Deliverables
+These include trained models and preprocessing resources:
+#### Preprocessing
+* Repository with working preprocessing functions [View](https://github.com/JJWasyl/SentDataPre)
+* Google word2vec file `SentDataPre\cnn\data` [Download]()
+* Raw SST2 dataset `SentDataPre\cnn\data\sst2` [Download](https://drive.google.com/file/d/1-JIFHI2CYEZBR_mm0CTnSQ6-157CCqwS/view?usp=sharing)
+#### Project
+* Preprocessed SST2 dataset `WordAdver\ ` [Download](https://drive.google.com/file/d/1604uZ-z5bmy3PhpDNq-tyPU-70NFekqj/view?usp=sharing)
+* One_word model `WordAdver\save\one_word` [Download](https://drive.google.com/file/d/1Icp9bxav_4_wmeAoT0f22pgyaSgu1yML/view?usp=sharing)
+* Two_word model `WordAdver\save\two_word` [Download](https://drive.google.com/file/d/1hdIJWqCIhX_GPmkJ9ASqziC7lgJSIXTV/view?usp=sharing)
+* LSTM model to attack `WordAdver\lstm\data` [Download](https://drive.google.com/file/d/1mvDooe66snP_Pwr_ZW9uJU951Q4ZBLZL/view?usp=sharing)
 
 
-### Data Preprocessing
-To process the raw data, please refer to [https://github.com/AnyiRao/SentDataPre](https://github.com/AnyiRao/SentDataPre)
+## Data Preprocessing (optional)
+To process the raw data, clone this [repository](https://github.com/JJWasyl/SentDataPre)<br/>
+1. Download and place the raw files in the designated directory.
+1. Run `SentDataPre\cnn\process_data_sst2`.
+1. Run `SentDataPre\lstm\preprocess_sst2`.
+1. Import the two `pickle` files to `WordAdver\ ` and `WordAdver\lstm\data` respectively.
 
-set ``word2vec`` path points to the word2vec binary file (i.e. `GoogleNews-vectors-negative300.bin` file). 
+## Training
+Currently, two model scripts are functional. Please import the preprocessed 
+datasets for both models before running any script.<br/>
+* ``add_one_word.py`` Only one word flip  
+* ``add_two_word.py`` Verify two word flips 
+1. Train one of the two above models with a choice of the following parameters and flags.
+Change `device=cpu` if you wish to train on the CPU. Use `-nonstatic / -static` for embedding
+updates and `-word2vec / -random` for starting word embedding vectors.
+1. Similarly, train the LSTM classifier `WordAdver\lstm\sst2_lstm`. You can skip the flags.
 
-### Different Versions of Codes
-``add_one_word.py`` Only one word flip 
-
-``add_two_word.py`` Allow two word flip 
-
-``add_one_word_sub.py`` Only one word flip using gradient subtraction.
-
-``change_labels.py`` Only one word flip with labels change
-
-``use_pretrained_gene_testset.py`` Use pretrained model to generate adversarial test set and test accuracy (with confidence) on it. 
-
-``conv_net_sentence.py`` As same as Kim's CNN
-
-* **lstm**
-The adversarial examples generated from CNN are able to attack a BLSTM.
-
-	``sst2_lstm.py`` Train a BLSTM model
-
-	``use_pretrained_model.py`` Use adversarial examples from CNN (e.g. ``sst2_0.4_two_examples.txt``) to attack pretrained BLSTM model.
- 
-### Running the models (CPU)
-Example commands:
-
+Command examples
 ```
-THEANO_FLAGS=mode=FAST_RUN,device=cpu,floatX=float32 python conv_net_sentence.py -nonstatic -rand
-THEANO_FLAGS=mode=FAST_RUN,device=cpu,floatX=float32 python conv_net_sentence.py -static -word2vec
-THEANO_FLAGS=mode=FAST_RUN,device=cpu,floatX=float32 python conv_net_sentence.py -nonstatic -word2vec
+Multicommand syntax varies slightly between Windows and Unix
+THEANO_FLAGS=mode=FAST_RUN,device=cuda,floatX=float32 & python add_one_word.py -nonstatic -rand
+THEANO_FLAGS=mode=FAST_RUN,device=cuda,floatX=float32 & python add_one_word.py -static -word2vec
+THEANO_FLAGS=mode=FAST_RUN,device=cuda,floatX=float32 & python add_one_word.py -nonstatic -word2vec
 ```
 
-This will run the CNN-rand, CNN-static, and CNN-nonstatic models respectively.
+## Usage
+The individual scripts have to be run with the above flags to allow model reloading.
+They are accessible individually (note filepaths must then be changes withing the
+code if you switch back and forht between models) or through the `adver_api.py` for user convenience. Scripts include:  
 
-### Using the GPU
-GPU will result in a good 10x to 20x speed-up, so it is highly recommended. 
-To use the GPU, simply change `device=cpu` to `device=gpu` (or whichever gpu you are using).
-For example:
-```
-THEANO_FLAGS=mode=FAST_RUN,device=gpu,floatX=float32 python conv_net_sentence.py -nonstatic -word2vec
-```
+* ``use_pretrained_gene_testset.py`` Use pretrained model to generate adversarial test set and test accuracy (with confidence) on it. 
+* ``use_pretrained_model.py`` Use adversarial examples from CNN with an adversarial file as the argument.
 
-### Citation
+*Note: the generated examples use `chr201` blankspace characters which confuse the
+the classifier and must be cleaned out before use.*
 
-If you use this repository in your researh, please cite:
+#### Use `adver_api` (reccomended)
+ A simplistic menu for generating (and cleaning) adversarial examples and loading them 
+ for testing on the LSTM model.  <br/><br/>
+ ![Example api](https://github.com/JJWasyl/WordAdver/images/Example.png)
+ <br/> 
+
+### Original Project Citation
+If you use this repository in your researh, please cite its original authors:
 
 	@inproceedings{ebrahimi2018hotflip,
 	  title={HotFlip: White-Box Adversarial Examples for Text Classification},

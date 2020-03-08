@@ -61,8 +61,8 @@ def load_adv():
              for j in xrange(len(adver_x)):
                  Adver_x.append(adver_x[j]) 
          Adver_y=np.tile(adver_y,(n_tile,))   
-    #Adver_x=Adver_x[:len(test[0])]
-    #Adver_y=Adver_y[:len(test[0])]
+    Adver_x=Adver_x[:len(test[0])]
+    Adver_y=Adver_y[:len(test[0])]
     Adver=(Adver_x,Adver_y)
     return (Adver, adv_len)
 
@@ -208,7 +208,8 @@ if __name__ == '__main__':
     print ('{} train examples'.format(len(train[0])))
     print ('{} valid examples'.format(len(valid[0])))
     if not get_orig_from_arg():
-        print ('{} test examples'.format(ad_len/2))
+        print ('{} adversarial test examples'.format(ad_len/2))
+        print ('{} ovarall test examples'.format(len(testset[0])))
     else:
         print ('{} test examples'.format(len(testset[0])))
 
