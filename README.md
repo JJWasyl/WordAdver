@@ -28,17 +28,22 @@ This repository holds the **Word-level Adversarial Examples** codes and models a
     A percentage accuracy score on the original dataset spliced with the adversarial examples.
 
 ## Environment Requirements
+#### Overall
+* NLTK (`stopwords`, `punkt`, `brown`, `wordnet` and `universal_tagset` may require to be downloaded
+ from the python interpreter using `nltk.download('package_name')`)
+* numpy
+* scipy
+* cPickle
+#### Preprocessing
+* Python (3.7)
+* Pandas
+* gcc
+* tensorflow (latest)
+#### Training
 * Python (2.7) 
 * Theano (0.9)
 * CUDA (9.0)
 * Cudnn (8.0)
-* NLTK (`stopwords`, `punkt`, `brown`, `wordnet` and `universal_tagset` may require to be downloaded
- from the python interpreter using `nltk.download('package_name')`)
-* Pandas
-* numpy
-* scipy
-* cPickle
-
 
 *Note: Docker image is still pending on AWS<br/>Warnings are common due to increasing
 deprecations and incompatibilities.*
@@ -58,6 +63,7 @@ These include trained models and preprocessing resources:
 
 ## Data Preprocessing (optional)
 To process the raw data, clone this [repository](https://github.com/JJWasyl/SentDataPre)<br/>
+Working environment requires **Python 3.6**.
 1. Download and place the raw files in the designated directory.
 1. Run `SentDataPre\cnn\process_data_sst2`.
 1. Run `SentDataPre\lstm\preprocess_sst2`.
@@ -66,6 +72,7 @@ To process the raw data, clone this [repository](https://github.com/JJWasyl/Sent
 ## Training
 Currently, two model scripts are functional. Please import the preprocessed 
 datasets for both models before running any script.<br/>
+Working environment requires **Python 2.7**.
 * ``add_one_word.py`` Only one word flip  
 * ``add_two_word.py`` Verify two word flips 
 1. Train one of the two above models with a choice of the following parameters and flags.
