@@ -38,7 +38,7 @@ This repository holds the **Word-level Adversarial Examples** codes and models a
 These include trained models and preprocessing resources:
 #### Preprocessing
 * Repository with working preprocessing functions [View](https://github.com/JJWasyl/SentDataPre)
-* Google word2vec file `SentDataPre\cnn\data` [Download]()
+* Google word2vec file `SentDataPre\cnn\data` [Download](https://drive.google.com/file/d/1reHfMDtVnGsIzIiSvy8pKv2Jz1WLTl2c/view?usp=sharing)
 * Raw SST2 dataset `SentDataPre\cnn\data\sst2` [Download](https://drive.google.com/file/d/1-JIFHI2CYEZBR_mm0CTnSQ6-157CCqwS/view?usp=sharing)
 #### Project
 * Preprocessed SST2 dataset `WordAdver\ ` [Download](https://drive.google.com/file/d/1604uZ-z5bmy3PhpDNq-tyPU-70NFekqj/view?usp=sharing)
